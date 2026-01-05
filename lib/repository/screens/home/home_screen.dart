@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:netflix_clone/domain/data/utils.dart';
 import 'package:netflix_clone/models/movie_model.dart';
+import 'package:netflix_clone/models/popular_tv_series_model.dart';
+import 'package:netflix_clone/models/top_rated_movie_model.dart';
+import 'package:netflix_clone/models/trending_movie_model.dart';
 import 'package:netflix_clone/models/upcoming_movie_model.dart';
 import 'package:netflix_clone/services/api_services.dart';
 
@@ -17,11 +20,17 @@ class _HomeScreenState extends State<HomeScreen> {
   final ApiServices apiServices = ApiServices();
   late Future<Movie?> movieData;
   late Future<UpcomingMovies?> upcomingMovies;
+  late Future<TrendingMovies?> trendingMovies;
+  late Future<TopRatedMovie?> topRatedMovies;
+  late Future<PopularTvSeries?> popularTvSeries;
 
   @override
   void initState() {
     movieData = apiServices.fetchMovies();
     upcomingMovies = apiServices.upComingMovies();
+    trendingMovies = apiServices.trendingMovies();
+    topRatedMovies = apiServices.topRatedMovies();
+    popularTvSeries = apiServices.popularTvSeries();
     super.initState();
   }
 
@@ -244,9 +253,25 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             SizedBox(height: 30),
             moviesType(
+              future: trendingMovies,
+              movieType: "Trending Movies on Netflix",
+            ),
+            moviesType(
               future: upcomingMovies,
               movieType: "UpComing Movies",
               isReserve: true,
+            ),
+            moviesType(
+              future: popularTvSeries,
+              movieType: "Popular Tv Series - Most - Watch For You",
+            ),
+            moviesType(
+              future: popularTvSeries,
+              movieType: "Popular Tv Series - Most - Watch For You",
+            ),
+            moviesType(
+              future: topRatedMovies,
+              movieType: "Top Rated Movies",
             ),
           ],
         ),
@@ -276,7 +301,7 @@ class _HomeScreenState extends State<HomeScreen> {
             height: 180,
             width: double.maxFinite,
             child: FutureBuilder(
-              future: movieData,
+              future: future,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());

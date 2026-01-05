@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:netflix_clone/domain/data/utils.dart';
 import 'package:netflix_clone/models/movie_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:netflix_clone/models/popular_tv_series_model.dart';
+import 'package:netflix_clone/models/top_rated_movie_model.dart';
 import 'package:netflix_clone/models/trending_movie_model.dart';
 import 'package:netflix_clone/models/upcoming_movie_model.dart';
 
@@ -55,6 +57,39 @@ class ApiServices {
         return TrendingMovies.fromJson(jsonData);
       } else {
         throw Exception("Failed To Load upcoming movies");
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
+  // Top Rated Movies
+  Future<TopRatedMovie?> topRatedMovies() async {
+    try {
+      const endPoint = "movie/top_rated";
+      final apiUrl = "$baseUrl$endPoint$key";
+      final response = await http.get(Uri.parse(apiUrl));
+      final jsonData = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        return TopRatedMovie.fromJson(jsonData);
+      } else {
+        throw Exception("Failed To Load top rated movies");
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+  // Popular Tv Series
+  Future<PopularTvSeries?> popularTvSeries() async {
+    try {
+      const endPoint = "tv/popular";
+      final apiUrl = "$baseUrl$endPoint$key";
+      final response = await http.get(Uri.parse(apiUrl));
+      final jsonData = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        return PopularTvSeries.fromJson(jsonData);
+      } else {
+        throw Exception("Failed To Load top rated movies");
       }
     } catch (e) {
       return null;
