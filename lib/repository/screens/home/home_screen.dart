@@ -7,6 +7,7 @@ import 'package:netflix_clone/models/popular_tv_series_model.dart';
 import 'package:netflix_clone/models/top_rated_movie_model.dart';
 import 'package:netflix_clone/models/trending_movie_model.dart';
 import 'package:netflix_clone/models/upcoming_movie_model.dart';
+import 'package:netflix_clone/repository/screens/home/movie_detail_screen.dart';
 import 'package:netflix_clone/services/api_services.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -159,7 +160,16 @@ class _HomeScreenState extends State<HomeScreen> {
                               itemBuilder: (context, index) {
                                 final movie = movies[index];
                                 return GestureDetector(
-                                  onTap: () {},
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => MovieDetailScreen(
+                                          movieId: movie.id!,
+                                        ),
+                                      ),
+                                    );
+                                  },
                                   child: Container(
                                     width: 338,
                                     height: 530,
@@ -265,14 +275,7 @@ class _HomeScreenState extends State<HomeScreen> {
               future: popularTvSeries,
               movieType: "Popular Tv Series - Most - Watch For You",
             ),
-            moviesType(
-              future: popularTvSeries,
-              movieType: "Popular Tv Series - Most - Watch For You",
-            ),
-            moviesType(
-              future: topRatedMovies,
-              movieType: "Top Rated Movies",
-            ),
+            moviesType(future: topRatedMovies, movieType: "Top Rated Movies"),
           ],
         ),
       ),
@@ -318,7 +321,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       return Padding(
                         padding: const EdgeInsets.only(right: 8.0),
                         child: GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    MovieDetailScreen(movieId: movie.id!),
+                              ),
+                            );
+                          },
                           child: Container(
                             width: 130,
                             decoration: BoxDecoration(
