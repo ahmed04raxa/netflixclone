@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:netflix_clone/repository/screens/home/home_screen.dart';
+import 'package:netflix_clone/repository/screens/search/search_screen.dart';
 
 class BottomNavScreen extends StatefulWidget {
   const BottomNavScreen({super.key});
@@ -32,7 +33,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
             dividerColor: Colors.transparent,
           ),
         ),
-        body: TabBarView(children: [HomeScreen(), Scaffold(), Scaffold()]),
+        body: TabBarView(children: [HomeScreen(), SearchScreen(), Scaffold()]),
       ),
     );
   }

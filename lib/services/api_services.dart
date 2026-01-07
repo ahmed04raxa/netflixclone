@@ -6,6 +6,7 @@ import 'package:netflix_clone/models/movie_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:netflix_clone/models/movie_recommendations_model.dart';
 import 'package:netflix_clone/models/popular_tv_series_model.dart';
+import 'package:netflix_clone/models/search_movie_model.dart';
 import 'package:netflix_clone/models/top_rated_movie_model.dart';
 import 'package:netflix_clone/models/trending_movie_model.dart';
 import 'package:netflix_clone/models/upcoming_movie_model.dart';
@@ -13,6 +14,7 @@ import 'package:netflix_clone/models/upcoming_movie_model.dart';
 var key = "?api_key=$apiKey";
 
 class ApiServices {
+
   // NOW PLAYING MOVIES
 
   Future<Movie?> fetchMovies() async {
@@ -127,6 +129,31 @@ class ApiServices {
         return MovieRecommendations.fromJson(jsonData);
       } else {
         throw Exception("Failed To Load top rated movies");
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
+  // SEARCH Movie
+  Future<SearchMovie?> searchMovie(String query) async {
+    try {
+      final apiUrl =
+          "$baseUrl/search/movie?query=${Uri.encodeQueryComponent(query)}&language=en-US&include_adult=true";
+
+      final response = await http.get(
+        Uri.parse(apiUrl),
+        headers: {
+          "Authorization":
+              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2YWQ5YWEyZjdmMTNjODgzNWRkNDI0ZGI2Y2NjMjU0YiIsIm5iZiI6MTc2NzUzNDU1OC4xLCJzdWIiOiI2OTVhNmZkZTNmNTg2NzE5OGE3YzgwMTIiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.apuXls4p4VdtxQNgB4n3LR8x111yBpFnlema4-xNR84",
+          "Content-Type": "application/json;charset=utf-8",
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return SearchMovie.fromJson(jsonDecode(response.body));
+      } else {
+        throw Exception("Search failed");
       }
     } catch (e) {
       return null;

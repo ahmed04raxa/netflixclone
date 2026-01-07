@@ -8,6 +8,7 @@ import 'package:netflix_clone/models/top_rated_movie_model.dart';
 import 'package:netflix_clone/models/trending_movie_model.dart';
 import 'package:netflix_clone/models/upcoming_movie_model.dart';
 import 'package:netflix_clone/repository/screens/home/movie_detail_screen.dart';
+import 'package:netflix_clone/repository/screens/search/search_screen.dart';
 import 'package:netflix_clone/services/api_services.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -54,7 +55,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Spacer(),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SearchScreen()),
+                      );
+                    },
                     icon: Icon(
                       Iconsax.search_normal,
                       size: 27,
