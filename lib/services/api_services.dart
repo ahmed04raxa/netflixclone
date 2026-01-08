@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:netflix_clone/models/movie_recommendations_model.dart';
 import 'package:netflix_clone/models/popular_tv_series_model.dart';
 import 'package:netflix_clone/models/search_movie_model.dart';
+import 'package:netflix_clone/models/tmdb_trending_model.dart';
 import 'package:netflix_clone/models/top_rated_movie_model.dart';
 import 'package:netflix_clone/models/trending_movie_model.dart';
 import 'package:netflix_clone/models/upcoming_movie_model.dart';
@@ -14,7 +15,6 @@ import 'package:netflix_clone/models/upcoming_movie_model.dart';
 var key = "?api_key=$apiKey";
 
 class ApiServices {
-
   // NOW PLAYING MOVIES
 
   Future<Movie?> fetchMovies() async {
@@ -154,6 +154,23 @@ class ApiServices {
         return SearchMovie.fromJson(jsonDecode(response.body));
       } else {
         throw Exception("Search failed");
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
+  // TMDB Trending Movies
+  Future<TmdbTrending?> tmdbTrending() async {
+    try {
+      final endPoint = "trending/all/day";
+      final apiUrl = "$baseUrl$endPoint$key";
+      final response = await http.get(Uri.parse(apiUrl));
+      final jsonData = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        return TmdbTrending.fromJson(jsonData);
+      } else {
+        throw Exception("Failed To Load top rated movies");
       }
     } catch (e) {
       return null;

@@ -19,6 +19,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final ScrollController scrollController = ScrollController();
   final ApiServices apiServices = ApiServices();
   late Future<Movie?> movieData;
   late Future<UpcomingMovies?> upcomingMovies;
@@ -41,6 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: SingleChildScrollView(
+        controller: scrollController,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -78,7 +80,13 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Row(
                 children: [
                   MaterialButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      scrollController.animateTo(
+                        700,
+                        duration: Duration(milliseconds: 100),
+                        curve: Curves.bounceIn,
+                      );
+                    },
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                       side: BorderSide(color: Colors.white38),
@@ -93,7 +101,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   SizedBox(width: 8),
                   MaterialButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      scrollController.animateTo(
+                        300,
+                        duration: Duration(milliseconds: 100),
+                        curve: Curves.bounceIn,
+                      );
+                    },
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                       side: BorderSide(color: Colors.white38),

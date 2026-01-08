@@ -150,7 +150,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           ],
                         );
                       }
-                      return Center(child: CircularProgressIndicator(),);
+                      return Center(child: CircularProgressIndicator());
                     },
                   )
                 : searchMovie == null
